@@ -74,7 +74,7 @@ export function PlayerWaitingRoom({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-4">
+    <div className="min-h-screen bg-linear-to-br from-indigo-500 to-purple-600 p-4">
       <div className="max-w-2xl mx-auto pt-8">
         <Card className="p-8 bg-white">
           <div className="text-center mb-8">
@@ -109,7 +109,7 @@ export function PlayerWaitingRoom({
                   className="flex items-center gap-3 p-2 rounded-lg bg-gray-50"
                 >
                   <div
-                    className="w-8 h-8 rounded-full flex-shrink-0"
+                    className="w-8 h-8 rounded-full shrink-0"
                     style={{ backgroundColor: p.color }}
                   />
                   <span className="font-medium text-gray-900">{p.name}</span>

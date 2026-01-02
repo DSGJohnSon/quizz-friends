@@ -13,7 +13,7 @@ export function PlayerList({ players }: { players: Player[] }) {
           className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50"
         >
           <div
-            className="w-8 h-8 rounded-full flex-shrink-0"
+            className="w-8 h-8 rounded-full shrink-0"
             style={{ backgroundColor: player.color }}
           />
           <span className="font-medium flex-1">{player.name}</span>

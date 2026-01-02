@@ -4,7 +4,7 @@ import { VersionDisplay } from "@/components/version-display";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
       <div className="text-center text-white">
         <h1 className="text-6xl font-bold mb-4">Quiz Friends</h1>
         <p className="text-2xl mb-8 opacity-90">

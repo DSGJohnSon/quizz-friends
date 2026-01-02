@@ -13,7 +13,7 @@ export function PlayerGrid({ players }: { players: Player[] }) {
           className="flex items-center gap-3 bg-white/10 backdrop-blur-sm p-4 rounded-lg"
         >
           <div
-            className="w-12 h-12 rounded-full flex-shrink-0"
+            className="w-12 h-12 rounded-full shrink-0"
             style={{ backgroundColor: player.color }}
           />
           <span className="text-xl font-semibold">{player.name}</span>
