@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SessionStatus {
+  DRAFT // Session créée, non publiée
+  PUBLISHED // Publiée, pas encore ouverte aux joueurs
+  OPEN // Ouverte, joueurs peuvent rejoindre
+  LOCKED // Inscriptions fermées, en attente de démarrage
+  IN_PROGRESS // Jeu en cours
+  FINISHED // Jeu terminé
+}
+
+model GameSession {
+  id                  String        @id @default(cuid())
+  code                String        @unique // Code 6 caractères pour rejoindre
+  title               String
+  description         String?
+  expectedPlayerCount Int           @default(4)
+  status              SessionStatus @default(DRAFT)
+
+  // Relations
+  players Player[]
+  modules Module[] // Structure extensible pour futur
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+
+  @@index([code])
+  @@index([status])
+}
+
+model Player {
+  id          String  @id @default(cuid())
+  sessionId   String
+  name        String
+  color       String // Couleur auto-assignée (hex)
+  isConnected Boolean @default(true)
+
+  session GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  joinedAt DateTime @default(now())
+
+  @@unique([sessionId, name]) // Pas de doublons de noms dans une session
+  @@index([sessionId])
+}
+
+// Structure extensible pour les modules futurs
+model Module {
+  id        String @id @default(cuid())
+  sessionId String
+  type      String // "QUIZ", "RAPID_FIRE", etc. (non implémenté en v1)
+  name      String
+  order     Int    @default(0)
+  config    Json? // Configuration flexible pour chaque type
+
+  session GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+}
