@@ -51,8 +51,23 @@ model Player {
   joinedAt     DateTime @default(now())
   lastActiveAt DateTime @default(now()) // Pour le heartbeat
 
+  totalScore   Int          @default(0)
+  scoreEntries ScoreEntry[]
+
   @@unique([sessionId, name]) // Pas de doublons de noms dans une session
   @@index([sessionId])
+}
+
+model ScoreEntry {
+  id        String   @id @default(cuid())
+  playerId  String
+  points    Int
+  reason    String
+  createdAt DateTime @default(now())
+
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
 }
 
 // Structure extensible pour les modules futurs

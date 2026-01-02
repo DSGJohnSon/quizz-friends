@@ -73,6 +73,7 @@ Interface pour l'animateur :
 - Créer une nouvelle session
 - Gérer les sessions existantes
 - Voir la liste des joueurs en temps réel
+- **Contrôler les scores manuellement** (ajout/retrait de points)
 - Publier, verrouiller et lancer les sessions
 
 ### `/game/[sessionId]` - Écran TV
@@ -168,18 +169,16 @@ DRAFT → PUBLISHED → OPEN → LOCKED → IN_PROGRESS → FINISHED
 - [ ] Authentification Supabase
 - [ ] Éditeur de questions graphique
 
-## 📚 Documentation
-
 Toute la documentation du projet est centralisée dans le dossier [`/docs`](docs/):
 
 - **[Changelog](docs/changelog/)** : Historique des versions
 - **[Tests](docs/tests/)** : Guides de test par version
-- **[Reconnexion](docs/reconnection.md)** : Documentation de la reconnexion automatique
+- **[Features](docs/features/)** : Documentation des fonctionnalités (Score, Session, Reconnexion)
 - **[Organisation](docs/ORGANIZATION.md)** : Guide d'organisation de la documentation
 
 ### Version Actuelle
 
-**v1.0.0** - Affichée en bas à gauche de chaque écran
+**v1.2.0** - Affichée en bas à gauche de chaque écran
 
 Pour mettre à jour la version, modifier `lib/version.ts`.
 

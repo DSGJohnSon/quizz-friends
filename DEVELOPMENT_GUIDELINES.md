@@ -116,6 +116,7 @@ quizz-friends/
 ├── docs/                     # Documentation centralisée
 │   ├── changelog/            # Historique versions
 │   ├── tests/                # Guides de test
+│   ├── features/             # Documentation des features
 │   └── *.md                  # Docs techniques
 └── README.md                 # Documentation principale
 ```
@@ -175,6 +176,15 @@ quizz-friends/
 - ✅ Expiration des sessions (24h)
 - ✅ Page de résultats publique (`/sessions/[id]/results`)
 
+#### Système de Score (v1.2.0)
+
+- ✅ Modèle `ScoreEntry` et cache `totalScore`.
+- ✅ Service `awardPoints` atomique.
+- ✅ Affichage temps réel Host/Player.
+- ✅ Page de résultats avec Podium (Top 3).
+- ✅ **Contrôle manuel des scores** : Interface host pour ajout/retrait de points.
+- ✅ Bouton "Terminer session" temporaire.
+
 #### Système de Versioning
 
 - ✅ Affichage version (bas gauche)
@@ -184,9 +194,9 @@ quizz-friends/
 ### Roadmap v2 (À venir)
 
 - [ ] Modules de jeu (Quiz, Rapid-fire)
-- [ ] Questions et réponses
-- [ ] Système de scores
-- [ ] Classements
+- [ ] Système de questions et réponses
+- [x] Système de scores (extensible & manuel)
+- [x] Classements et podiums
 - [ ] Animations avancées
 - [ ] Authentification Supabase
 - [ ] Éditeur de questions
@@ -333,6 +343,6 @@ quizz-friends/
 
 ---
 
-**Version de ce document** : 1.1.0  
-**Dernière mise à jour** : 2026-01-02  
+**Version de ce document** : 1.2.0  
+**Dernière mise à jour** : 2026-01-03  
 **Maintenir à jour après chaque tâche importante !**

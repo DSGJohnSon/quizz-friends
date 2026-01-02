@@ -129,6 +129,22 @@ export function HostControlPanel({
     }
   }
 
+  async function handleFinish() {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/sessions/${session.id}/finish`, {
+        method: "POST",
+      });
+      const updated = await res.json();
+      setSession(updated);
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la fin de session");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Sidebar gauche: Joueurs */}
@@ -195,13 +211,25 @@ export function HostControlPanel({
           )}
 
           {session.status === "IN_PROGRESS" && (
-            <div className="p-6 bg-green-50 border border-green-200 rounded-lg text-center">
-              <p className="text-lg font-semibold text-green-900">
-                Jeu en cours
-              </p>
-              <p className="text-sm text-green-700 mt-2">
-                Les modules de jeu seront implémentés dans la prochaine version
-              </p>
+            <div className="space-y-4">
+              <div className="p-6 bg-green-50 border border-green-200 rounded-lg text-center">
+                <p className="text-lg font-semibold text-green-900">
+                  Jeu en cours
+                </p>
+                <p className="text-sm text-green-700 mt-2">
+                  Les scores sont mis à jour en temps réel ci-contre.
+                </p>
+              </div>
+
+              <Button
+                onClick={handleFinish}
+                disabled={loading}
+                variant="destructive"
+                size="lg"
+                className="w-full"
+              >
+                Terminer la session
+              </Button>
             </div>
           )}
         </div>

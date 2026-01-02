@@ -7,18 +7,29 @@ Ce dossier contient toute la documentation du projet Quiz Friends.
 ```
 docs/
 ├── changelog/           # Historique des versions
-│   └── v1.0.0.md       # Changelog version 1.0.0
+│   ├── v1.0.0.md
+│   ├── v1.1.0.md
+│   └── v1.2.0.md
 ├── tests/              # Guides de test par version
-│   └── v1.0.0-tests.md # Tests pour la v1.0.0
-├── PRISMA_V7_FIX.md    # Documentation migration Prisma
-└── reconnection.md     # Documentation reconnexion joueurs
+│   ├── v1.0.0-tests.md
+│   ├── v1.1.0-tests.md
+│   └── v1.2.0-tests.md
+├── features/           # Documentation des fonctionnalités
+│   ├── RECONNECTION.md
+│   ├── SCORE.md
+│   └── SESSION.md
+└── PRISMA_V7_FIX.md    # Documentation technique
 ```
 
 ## 📚 Documents Principaux
 
-### [reconnection.md](./reconnection.md)
+### [features/](./features/)
 
-Documentation complète de la fonctionnalité de reconnexion automatique des joueurs via localStorage.
+Documentation détaillée des fonctionnalités cœur :
+
+- **[Reconnexion](./features/RECONNECTION.md)** : Système de reconnexion auto.
+- **[Sessions](./features/SESSION.md)** : Cycle de vie et transitions.
+- **[Scores](./features/SCORE.md)** : Moteur de points et extensibilité.
 
 ## 📝 Changelog
 

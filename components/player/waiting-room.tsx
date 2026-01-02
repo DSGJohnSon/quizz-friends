@@ -83,6 +83,15 @@ export function PlayerWaitingRoom({
               style={{ backgroundColor: player.color }}
             />
             <h2 className="text-2xl font-bold text-gray-900">{player.name}</h2>
+            <div className="mt-4 inline-flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-full">
+              <span className="text-sm font-medium text-indigo-600 uppercase tracking-wider">
+                Score
+              </span>
+              <span className="text-2xl font-black text-indigo-700 tabular-nums">
+                {session.players.find((p) => p.id === player.id)?.totalScore ??
+                  0}
+              </span>
+            </div>
           </div>
 
           <div className="mb-6">
@@ -112,7 +121,12 @@ export function PlayerWaitingRoom({
                     className="w-8 h-8 rounded-full shrink-0"
                     style={{ backgroundColor: p.color }}
                   />
-                  <span className="font-medium text-gray-900">{p.name}</span>
+                  <span className="font-medium text-gray-900 flex-1">
+                    {p.name}
+                  </span>
+                  <span className="font-bold text-indigo-600 tabular-nums bg-indigo-50 px-2 py-0.5 rounded">
+                    {p.totalScore}
+                  </span>
                   {p.id === player.id && (
                     <span className="ml-auto text-xs text-gray-500">
                       (Vous)

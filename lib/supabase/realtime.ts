@@ -9,7 +9,8 @@ export type RealtimeEventType =
   | "session:started"
   | "session:finished"
   | "player:joined"
-  | "player:left";
+  | "player:left"
+  | "player:score_updated";
 
 export interface RealtimeEvent {
   type: RealtimeEventType;
