@@ -17,6 +17,10 @@ export async function joinSession(sessionId: string, name: string) {
     throw new Error("Session is not open for registration");
   }
 
+  if (session.expiresAt && session.expiresAt < new Date()) {
+    throw new Error("Session has expired");
+  }
+
   // Gérer les doublons de noms
   let finalName = name;
   let counter = 1;
@@ -34,6 +38,7 @@ export async function joinSession(sessionId: string, name: string) {
       name: finalName,
       color,
       isConnected: true,
+      lastActiveAt: new Date(),
     },
   });
 
@@ -58,4 +63,30 @@ export async function getPlayer(playerId: string) {
     where: { id: playerId },
     include: { session: true },
   });
+}
+
+export async function updatePlayerHeartbeat(playerId: string) {
+  const player = await prisma.player.findUnique({
+    where: { id: playerId },
+  });
+
+  if (!player) return null;
+
+  const wasDisconnected = !player.isConnected;
+
+  const updatedPlayer = await prisma.player.update({
+    where: { id: playerId },
+    data: {
+      lastActiveAt: new Date(),
+      isConnected: true,
+    },
+  });
+
+  if (wasDisconnected) {
+    await publishEvent(player.sessionId, "player:joined", {
+      player: updatedPlayer,
+    });
+  }
+
+  return updatedPlayer;
 }

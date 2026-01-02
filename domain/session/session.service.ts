@@ -15,6 +15,7 @@ export async function createSession(data: {
       ...data,
       code,
       status: "DRAFT",
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expire dans 24h
     },
   });
 
@@ -82,7 +83,12 @@ export async function finishSession(sessionId: string) {
   return session;
 }
 
-export async function getSession(sessionId: string) {
+export async function getSession(sessionId: string, checkConnectivity = false) {
+  // Vérifier la connectivité des joueurs uniquement si demandé (par l'host généralement)
+  if (checkConnectivity) {
+    await checkPlayersConnectivity(sessionId);
+  }
+
   return prisma.gameSession.findUnique({
     where: { id: sessionId },
     include: {
@@ -105,6 +111,37 @@ export async function getSessionByCode(code: string) {
       },
     },
   });
+}
+
+async function checkPlayersConnectivity(sessionId: string) {
+  const now = new Date();
+  const timeout = 7 * 1000; // 7 secondes
+
+  const disconnectedPlayers = await prisma.player.findMany({
+    where: {
+      sessionId,
+      isConnected: true,
+      lastActiveAt: {
+        lt: new Date(now.getTime() - timeout),
+      },
+    },
+  });
+
+  if (disconnectedPlayers.length > 0) {
+    await prisma.player.updateMany({
+      where: {
+        id: { in: disconnectedPlayers.map((p) => p.id) },
+      },
+      data: { isConnected: false },
+    });
+
+    // Publier un événement pour chaque joueur déconnecté
+    for (const player of disconnectedPlayers) {
+      await publishEvent(sessionId, "player:left", {
+        player: { ...player, isConnected: false },
+      });
+    }
+  }
 }
 
 export async function listSessions(status?: SessionStatus) {

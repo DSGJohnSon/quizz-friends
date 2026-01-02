@@ -80,7 +80,6 @@ Une fois le plan validé :
 - Section "Fonctionnalités Principales"
 - Garder à jour pour les futures tâches
 
-
 > **📌 NOTICE**  
 > Le détails du fonctionnement dossier docs/ est disponible dans le fichier docs/README.md.
 
@@ -167,12 +166,14 @@ quizz-friends/
 - ✅ Bouton "Quitter"
 - ✅ Design mobile-first
 
-#### Synchronisation Temps Réel
+#### Reconnexion & Session (v1.1.0)
 
-- ✅ Supabase Realtime
-- ✅ Événements : session:_, player:_
-- ✅ Mise à jour < 500ms
-- ✅ Tous les écrans synchronisés
+- ✅ Système de heartbeat (signal toutes les 5s)
+- ✅ Détection automatique des déconnexions (10s)
+- ✅ Overlay de blocage sur l'interface joueur
+- ✅ Alertes Host (reconnexion/déconnexion)
+- ✅ Expiration des sessions (24h)
+- ✅ Page de résultats publique (`/sessions/[id]/results`)
 
 #### Système de Versioning
 
@@ -332,6 +333,6 @@ quizz-friends/
 
 ---
 
-**Version de ce document** : 1.0.0  
+**Version de ce document** : 1.1.0  
 **Dernière mise à jour** : 2026-01-02  
 **Maintenir à jour après chaque tâche importante !**

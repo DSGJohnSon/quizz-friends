@@ -13,6 +13,13 @@ export async function GET(
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
     }
 
+    if (session.expiresAt && session.expiresAt < new Date()) {
+      return NextResponse.json(
+        { error: "Session has expired" },
+        { status: 403 }
+      );
+    }
+
     return NextResponse.json(session);
   } catch (error) {
     return NextResponse.json(

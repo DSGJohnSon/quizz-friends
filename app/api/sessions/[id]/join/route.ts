@@ -28,6 +28,9 @@ export async function POST(
     if (error.message === "Session is not open for registration") {
       return NextResponse.json({ error: error.message }, { status: 403 });
     }
+    if (error.message === "Session has expired") {
+      return NextResponse.json({ error: error.message }, { status: 403 });
+    }
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

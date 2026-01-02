@@ -19,12 +19,48 @@ export function PlayerWaitingRoom({
 }) {
   const router = useRouter();
   const [session, setSession] = useState(initialSession);
+  const [isOnline, setIsOnline] = useState(true);
+  const [isHeartbeatFailing, setIsHeartbeatFailing] = useState(false);
+
+  // Heartbeat
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch(`/api/players/${player.id}/heartbeat`, { method: "POST" })
+        .then((res) => {
+          if (!res.ok) throw new Error("Heartbeat failed");
+          setIsHeartbeatFailing(false);
+        })
+        .catch(() => setIsHeartbeatFailing(true));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [player.id]);
+
+  // Network listeners
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   const handleRealtimeEvent = useCallback(() => {
     fetch(`/api/sessions/${session.id}`)
-      .then((res) => res.json())
-      .then(setSession)
-      .catch(console.error);
+      .then((res) => {
+        if (!res.ok) throw new Error("Session fetch failed");
+        return res.json();
+      })
+      .then((data) => {
+        setSession(data);
+        setIsHeartbeatFailing(false);
+      })
+      .catch(() => setIsHeartbeatFailing(true));
   }, [session.id]);
 
   useRealtimeSession(session.id, handleRealtimeEvent);
@@ -92,6 +128,27 @@ export function PlayerWaitingRoom({
           </Button>
         </Card>
       </div>
+
+      {(!isOnline || isHeartbeatFailing) && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm">
+          <Card className="max-w-xs w-full p-8 text-center animate-pulse">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  Reconnexion...
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {!isOnline
+                    ? "Votre connexion internet semble interrompue."
+                    : "Tentative de synchronisation avec le serveur."}
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
       <VersionDisplay />
     </div>
   );

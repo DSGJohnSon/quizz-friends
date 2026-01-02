@@ -126,10 +126,15 @@ Le localStorage est nettoyé :
    → Retour à l'accueil
    ```
 
-## 🚀 Améliorations Futures (v2)
+## 🚀 Améliorations (v1.1.0)
 
-- [ ] Synchroniser `isConnected` avec le statut réel du joueur
-- [ ] Détecter les déconnexions réseau et reconnecter automatiquement
-- [ ] Ajouter un timeout d'expiration (ex: 24h)
-- [ ] Permettre de "reprendre" une session terminée pour voir les résultats
-- [ ] Gérer plusieurs sessions simultanées par joueur
+- [x] Synchroniser `isConnected` avec le statut réel du joueur (Heartbeat 5s)
+- [x] Détecter les déconnexions réseau et bloquer l'interface (Network listeners)
+- [x] Ajouter un timeout d'expiration (24h)
+- [x] Permettre de "reprendre" une session via `/results`
+
+## 🎯 Avantages v1.1.0
+
+- **Fiabilité** : L'host sait exactement qui est là.
+- **Robustesse** : Le joueur est averti s'il perd sa connexion.
+- **Nettoyage** : Pas de sessions fantômes qui durent indéfiniment.

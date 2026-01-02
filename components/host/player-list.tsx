@@ -17,12 +17,21 @@ export function PlayerList({ players }: { players: Player[] }) {
             style={{ backgroundColor: player.color }}
           />
           <span className="font-medium flex-1">{player.name}</span>
-          {player.isConnected && (
+          <div className="flex items-center gap-2">
             <span
-              className="w-2 h-2 bg-green-500 rounded-full"
-              title="Connecté"
+              className={`w-2.5 h-2.5 rounded-full ${
+                player.isConnected ? "bg-green-500" : "bg-red-500 animate-pulse"
+              }`}
+              title={player.isConnected ? "Connecté" : "Déconnecté"}
             />
-          )}
+            <span
+              className={`text-[10px] uppercase font-bold ${
+                player.isConnected ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {player.isConnected ? "Online" : "Offline"}
+            </span>
+          </div>
         </li>
       ))}
     </ul>

@@ -7,7 +7,10 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const session = await getSession(id);
+    const { searchParams } = new URL(request.url);
+    const checkConnectivity = searchParams.get("checkConnectivity") === "true";
+
+    const session = await getSession(id, checkConnectivity);
 
     if (!session) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });

@@ -16,16 +16,70 @@ export function HostControlPanel({
 }) {
   const [session, setSession] = useState(initialSession);
   const [loading, setLoading] = useState(false);
+  const [alerts, setAlerts] = useState<
+    { id: string; message: string; type: "join" | "leave" }[]
+  >([]);
 
-  // Synchronisation temps réel
-  const handleRealtimeEvent = useCallback(() => {
-    fetch(`/api/sessions/${session.id}`)
-      .then((res) => res.json())
-      .then(setSession)
-      .catch(console.error);
+  // Polling périodique pour vérifier la connectivité (toutes les 5s)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch(`/api/sessions/${session.id}?checkConnectivity=true`)
+        .then((res) => res.json())
+        .then(setSession)
+        .catch(console.error);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, [session.id]);
 
+  // Synchronisation temps réel (sur événements spécifiques)
+  const handleRealtimeEvent = useCallback(
+    (event: any) => {
+      // Recharger la session pour avoir les données fraîches
+      fetch(`/api/sessions/${session.id}?checkConnectivity=true`)
+        .then((res) => res.json())
+        .then(setSession)
+        .catch(console.error);
+
+      // Gérer les alertes
+      if (event.type === "player:left") {
+        const id = Math.random().toString(36).substr(2, 9);
+        setAlerts((prev) => [
+          ...prev,
+          {
+            id,
+            message: `${event.payload.player.name} s'est déconnecté`,
+            type: "leave",
+          },
+        ]);
+        setTimeout(() => removeAlert(id), 15000); // 15 secondes
+      } else if (event.type === "player:joined" && event.payload.player) {
+        // Uniquement si c'est une reconnexion
+        const existingPlayer = session.players.find(
+          (p) => p.id === event.payload.player.id
+        );
+        if (existingPlayer && !existingPlayer.isConnected) {
+          const id = Math.random().toString(36).substr(2, 9);
+          setAlerts((prev) => [
+            ...prev,
+            {
+              id,
+              message: `${event.payload.player.name} est de retour !`,
+              type: "join",
+            },
+          ]);
+          setTimeout(() => removeAlert(id), 5000); // 5 secondes pour le retour
+        }
+      }
+    },
+    [session.id, session.players]
+  );
+
   useRealtimeSession(session.id, handleRealtimeEvent);
+
+  const removeAlert = (id: string) => {
+    setAlerts((prev) => prev.filter((a) => a.id !== id));
+  };
 
   async function handlePublish() {
     setLoading(true);
@@ -152,6 +206,33 @@ export function HostControlPanel({
           )}
         </div>
       </Card>
+
+      {/* Alertes flottantes */}
+      <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+        {alerts.map((alert) => (
+          <div
+            key={alert.id}
+            className={`pointer-events-auto p-4 rounded-lg shadow-lg border-l-4 flex items-center justify-between min-w-[300px] animate-in slide-in-from-right duration-300 ${
+              alert.type === "leave"
+                ? "bg-red-50 border-red-500 text-red-800"
+                : "bg-green-50 border-green-500 text-green-800"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-lg">
+                {alert.type === "leave" ? "⚠️" : "👋"}
+              </span>
+              <p className="font-medium">{alert.message}</p>
+            </div>
+            <button
+              onClick={() => removeAlert(alert.id)}
+              className="ml-4 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
