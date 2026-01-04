@@ -50,10 +50,23 @@ export async function openSession(sessionId: string) {
 export async function lockSession(sessionId: string) {
   const session = await prisma.gameSession.update({
     where: { id: sessionId },
-    data: { status: "LOCKED" },
+    data: {
+      status: "LOCKED",
+      displayState: {
+        display1: { view: { type: "EMPTY" } },
+        display2: { view: { type: "EMPTY" } },
+      },
+    },
+    include: { players: true },
   });
 
   await publishEvent(sessionId, "session:locked", { session });
+
+  // Aussi notifier le changement de display pour rafraîchir les écrans immédiatement
+  await publishEvent(sessionId, "display:updated", {
+    displayState: session.displayState,
+  });
+
   return session;
 }
 
@@ -63,10 +76,20 @@ export async function startSession(sessionId: string) {
     data: {
       status: "IN_PROGRESS",
       startedAt: new Date(),
+      displayState: {
+        display1: { view: { type: "EMPTY" } },
+        display2: { view: { type: "EMPTY" } },
+      },
     },
+    include: { players: true },
   });
 
   await publishEvent(sessionId, "session:started", { session });
+
+  await publishEvent(sessionId, "display:updated", {
+    displayState: session.displayState,
+  });
+
   return session;
 }
 
@@ -76,10 +99,20 @@ export async function finishSession(sessionId: string) {
     data: {
       status: "FINISHED",
       finishedAt: new Date(),
+      displayState: {
+        display1: { view: { type: "EMPTY" } },
+        display2: { view: { type: "EMPTY" } },
+      },
     },
+    include: { players: true },
   });
 
   await publishEvent(sessionId, "session:finished", { session });
+
+  await publishEvent(sessionId, "display:updated", {
+    displayState: session.displayState,
+  });
+
   return session;
 }
 

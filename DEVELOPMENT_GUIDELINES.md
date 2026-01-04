@@ -185,6 +185,14 @@ quizz-friends/
 - ✅ **Contrôle manuel des scores** : Interface host pour ajout/retrait de points.
 - ✅ Bouton "Terminer session" temporaire.
 
+#### Système Multi-Écrans (v1.3.0)
+
+- ✅ Support **Display 1** (`/game`) & **Display 2** (`/game-2`).
+- ✅ **Routage Automatique** : Distribution intelligente des contenus (QR, Players, Scoreboard).
+- ✅ **Split View** : Affichage combiné QR + Joueurs si display unique.
+- ✅ **Régie Host** : Interface de contrôle avec indicateurs de statut (Heartbeat) et modale de sélection.
+- ✅ Persistance totale de l'état des écrans.
+
 #### Système de Versioning
 
 - ✅ Affichage version (bas gauche)
@@ -197,6 +205,7 @@ quizz-friends/
 - [ ] Système de questions et réponses
 - [x] Système de scores (extensible & manuel)
 - [x] Classements et podiums
+- [x] Gestion Multi-Écrans (Displays)
 - [ ] Animations avancées
 - [ ] Authentification Supabase
 - [ ] Éditeur de questions
@@ -246,7 +255,8 @@ quizz-friends/
 - ✅ **Événements typés** : Interfaces claires
 - ✅ **Cleanup** : Unsubscribe lors du démontage
 - ✅ **Optimistic updates** : UI réactive
-- ✅ **Fallback** : Polling si Realtime échoue
+- ✅ **Feedback Visuel** : L'état des boutons doit refléter l'état réel serveur (pas juste un 'toggle' local).
+- ✅ **Fallback & Fiabilité** : TOUJOURS prévoir un polling (ex: 2-5s) en secours du Realtime pour les états critiques (Jeu, Affichage).
 
 ### 6. Documentation
 
@@ -278,6 +288,7 @@ quizz-friends/
 
 - **Tailwind CSS**
 - **shadcn/ui** (composants de base)
+- **Framer Motion** (Animations)
 
 ### Utilitaires
 
@@ -343,6 +354,6 @@ quizz-friends/
 
 ---
 
-**Version de ce document** : 1.2.0  
-**Dernière mise à jour** : 2026-01-03  
+**Version de ce document** : 1.3.0  
+**Dernière mise à jour** : 2026-01-04  
 **Maintenir à jour après chaque tâche importante !**

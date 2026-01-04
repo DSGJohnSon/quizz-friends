@@ -3,7 +3,7 @@ import { getDisplayState } from "@/domain/display/display.service";
 import { DisplayManager } from "@/components/game/display-manager";
 import { notFound } from "next/navigation";
 
-export default async function GamePage({
+export default async function Game2Page({
   params,
 }: {
   params: Promise<{ sessionId: string }>;
@@ -20,7 +20,7 @@ export default async function GamePage({
     <DisplayManager
       session={session}
       initialDisplayState={displayState}
-      displayTarget="DISPLAY_1"
+      displayTarget="DISPLAY_2"
     />
   );
 }

@@ -35,6 +35,8 @@ model GameSession {
   finishedAt  DateTime?
   expiresAt   DateTime? // Session expire après 24h
 
+  displayState Json? // État des écrans { display1: {}, display2: {} }
+
   @@index([code])
   @@index([status])
 }

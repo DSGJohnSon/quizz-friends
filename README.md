@@ -75,6 +75,20 @@ Interface pour l'animateur :
 - Voir la liste des joueurs en temps réel
 - **Contrôler les scores manuellement** (ajout/retrait de points)
 - Publier, verrouiller et lancer les sessions
+- **Système de Score** :
+
+  - Calcul automatique des points
+  - Classement en temps réel
+  - **Interface Host** : Contrôle manuel (bonus/malus)
+  - Podium fin de partie
+
+- **Gestion Multi-Écrans (NOUVEAU - v1.3.0)** :
+  - Support **Display 1** (`/game`) & **Display 2** (`/game-2`)
+  - **Routage Automatique** : Distribution intelligente (QR, Liste Joueurs, Scoreboard)
+  - **Split View** : Affichage combiné si un seul écran
+  - **Régie Complète** : Interface de contrôle, indicateurs de connexion, sélection de source.
+
+## 🛠️ Stack Technique
 
 ### `/game/[sessionId]` - Écran TV
 
@@ -178,7 +192,7 @@ Toute la documentation du projet est centralisée dans le dossier [`/docs`](docs
 
 ### Version Actuelle
 
-**v1.2.0** - Affichée en bas à gauche de chaque écran
+**v1.3.0** - Affichée en bas à gauche de chaque écran
 
 Pour mettre à jour la version, modifier `lib/version.ts`.
 

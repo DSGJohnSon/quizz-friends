@@ -30,6 +30,7 @@ Documentation détaillée des fonctionnalités cœur :
 - **[Reconnexion](./features/RECONNECTION.md)** : Système de reconnexion auto.
 - **[Sessions](./features/SESSION.md)** : Cycle de vie et transitions.
 - **[Scores](./features/SCORE.md)** : Moteur de points et extensibilité.
+- **[Displays](./features/DISPLAY.md)** : Gestion multi-écrans et routage auto.
 
 ## 📝 Changelog
 

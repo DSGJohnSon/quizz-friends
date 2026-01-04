@@ -1,7 +1,7 @@
 import { Player } from "@prisma/client";
 
-export function PlayerGrid({ players }: { players: Player[] }) {
-  if (players.length === 0) {
+export function PlayerGrid({ players = [] }: { players?: Player[] }) {
+  if (!players || players.length === 0) {
     return <p className="text-white/70 text-lg">En attente de joueurs...</p>;
   }
 

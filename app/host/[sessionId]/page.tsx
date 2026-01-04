@@ -1,6 +1,7 @@
 import { getSession } from "@/domain/session/session.service";
 import { HostControlPanel } from "@/components/host/control-panel";
 import { notFound } from "next/navigation";
+import { getDisplayState } from "@/domain/display/display.service";
 
 export default async function HostSessionPage({
   params,
@@ -9,6 +10,7 @@ export default async function HostSessionPage({
 }) {
   const { sessionId } = await params;
   const session = await getSession(sessionId);
+  const displayState = await getDisplayState(sessionId);
 
   if (!session) {
     notFound();
@@ -16,7 +18,7 @@ export default async function HostSessionPage({
 
   return (
     <div className="container mx-auto p-8 max-w-7xl">
-      <HostControlPanel session={session} />
+      <HostControlPanel session={session} initialDisplayState={displayState} />
     </div>
   );
 }

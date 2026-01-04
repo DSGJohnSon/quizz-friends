@@ -6,13 +6,17 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useRealtimeSession } from "@/hooks/use-realtime-session";
 import { PlayerList } from "./player-list";
+import { DisplayState } from "@/domain/display/display.types";
+import { CreditCard, Users } from "lucide-react";
 
 type SessionWithPlayers = GameSession & { players: Player[] };
 
 export function HostControlPanel({
   session: initialSession,
+  initialDisplayState,
 }: {
   session: SessionWithPlayers;
+  initialDisplayState: DisplayState;
 }) {
   const [session, setSession] = useState(initialSession);
   const [loading, setLoading] = useState(false);
@@ -145,6 +149,22 @@ export function HostControlPanel({
     }
   }
 
+  async function handleOpen() {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/sessions/${session.id}/open`, {
+        method: "POST",
+      });
+      const updated = await res.json();
+      setSession(updated);
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de l'ouverture des inscriptions");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Sidebar gauche: Joueurs */}
@@ -181,9 +201,20 @@ export function HostControlPanel({
             </Button>
           )}
 
-          {(session.status === "PUBLISHED" || session.status === "OPEN") && (
+          {session.status === "PUBLISHED" && (
+            <Button
+              onClick={handleOpen}
+              disabled={loading}
+              size="lg"
+              className="w-full"
+            >
+              Ouvrir les inscriptions
+            </Button>
+          )}
+
+          {session.status === "OPEN" && (
             <>
-              <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="p-4 bg-gray-50 rounded-lg mb-4">
                 <p className="text-sm text-gray-600 mb-2">Code de session:</p>
                 <p className="text-3xl font-mono font-bold">{session.code}</p>
               </div>
@@ -200,24 +231,106 @@ export function HostControlPanel({
           )}
 
           {session.status === "LOCKED" && (
-            <Button
-              onClick={handleStart}
-              disabled={loading}
-              size="lg"
-              className="w-full"
-            >
-              Lancer le jeu
-            </Button>
+            <div className="grid grid-cols-2 gap-4">
+              <Button
+                onClick={handleStart}
+                disabled={loading}
+                size="lg"
+                className="w-full"
+              >
+                Lancer la partie
+              </Button>
+              <Button
+                onClick={handleOpen}
+                disabled={loading}
+                variant="outline"
+                size="lg"
+                className="w-full"
+              >
+                Réouvrir les inscriptions
+              </Button>
+            </div>
           )}
 
           {session.status === "IN_PROGRESS" && (
             <div className="space-y-4">
+              {/* Display Controls pour IN_PROGRESS (Players / Scoreboard) */}
+              {/* Display Controls pour IN_PROGRESS (Players / Scoreboard) */}
+              <div className="mb-6 p-4 border border-blue-100 rounded-lg bg-blue-50/50">
+                <h3 className="font-semibold mb-4 text-blue-900">
+                  Contrôle Écran Secondaire (Joueurs / Score)
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Bouton Afficher Joueurs */}
+                  <Button
+                    variant={
+                      (session.displayState as any)?.display2?.view?.type ===
+                      "LOBBY"
+                        ? "default"
+                        : "outline"
+                    }
+                    onClick={async () => {
+                      await fetch(`/api/sessions/${session.id}/display`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          action: { type: "SHOW_LOBBY", target: "DISPLAY_2" },
+                          isDisplay2Available: true,
+                        }),
+                      });
+                    }}
+                    className={`transition-colors ${
+                      (session.displayState as any)?.display2?.view?.type ===
+                      "LOBBY"
+                        ? "bg-purple-600 hover:bg-purple-700 text-white shadow-md ring-2 ring-purple-200"
+                        : "bg-white hover:bg-purple-50 text-gray-700"
+                    }`}
+                  >
+                    <Users className="w-4 h-4 mr-2" />
+                    Afficher Joueurs
+                  </Button>
+
+                  {/* Bouton Afficher Scoreboard */}
+                  <Button
+                    variant={
+                      (session.displayState as any)?.display2?.view?.type ===
+                      "SCOREBOARD"
+                        ? "default"
+                        : "outline"
+                    }
+                    onClick={async () => {
+                      await fetch(`/api/sessions/${session.id}/display`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          action: {
+                            type: "SHOW_SCOREBOARD",
+                            target: "DISPLAY_2",
+                          },
+                          isDisplay2Available: true,
+                        }),
+                      });
+                    }}
+                    className={`transition-colors ${
+                      (session.displayState as any)?.display2?.view?.type ===
+                      "SCOREBOARD"
+                        ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md ring-2 ring-blue-200"
+                        : "bg-white hover:bg-blue-50 text-gray-700"
+                    }`}
+                  >
+                    <CreditCard className="w-4 h-4 mr-2" />
+                    Afficher Scoreboard
+                  </Button>
+                </div>
+              </div>
+
               <div className="p-6 bg-green-50 border border-green-200 rounded-lg text-center">
                 <p className="text-lg font-semibold text-green-900">
                   Jeu en cours
                 </p>
                 <p className="text-sm text-green-700 mt-2">
-                  Les scores sont mis à jour en temps réel ci-contre.
+                  Utilisez les boutons ci-dessus pour gérer l&apos;écran
+                  secondaire.
                 </p>
               </div>
 
@@ -230,6 +343,12 @@ export function HostControlPanel({
               >
                 Terminer la session
               </Button>
+            </div>
+          )}
+
+          {session.status === "FINISHED" && (
+            <div className="p-6 bg-gray-100 text-center rounded-lg">
+              <p className="text-gray-500 italic">Aucune action disponible</p>
             </div>
           )}
         </div>
