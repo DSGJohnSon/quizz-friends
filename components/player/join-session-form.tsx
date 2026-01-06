@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
 
 export function JoinSessionForm({ sessionCode }: { sessionCode?: string }) {
   const router = useRouter();
@@ -78,8 +79,8 @@ export function JoinSessionForm({ sessionCode }: { sessionCode?: string }) {
   }
 
   return (
-    <Card className="w-full max-w-md p-8 bg-white">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-900">
+    <Card className="w-full bg-gray-900/50 border border-gray-600/50 rounded-xl p-6">
+      <h1 className="text-3xl font-bold text-center mb-6 text-white">
         Rejoindre le quiz
       </h1>
 
@@ -91,7 +92,7 @@ export function JoinSessionForm({ sessionCode }: { sessionCode?: string }) {
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             maxLength={6}
             required
-            className="text-center text-2xl font-mono"
+            className="text-center text-2xl font-mono text-gray-950"
           />
         </div>
 
@@ -102,13 +103,19 @@ export function JoinSessionForm({ sessionCode }: { sessionCode?: string }) {
             onChange={(e) => setName(e.target.value)}
             maxLength={50}
             required
+            className="text-center text-2xl font-mono text-gray-950"
           />
         </div>
 
         {error && <p className="text-sm text-red-600 text-center">{error}</p>}
 
         <Button type="submit" disabled={loading} className="w-full" size="lg">
-          {loading ? "Connexion..." : "Rejoindre"}
+          {loading ? (
+            <div className="flex items-center justify-center">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Connexion...
+            </div>
+          ) : "Rejoindre"}
         </Button>
       </form>
     </Card>

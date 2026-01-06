@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import {
   DisplayState,
   DisplayTarget,
   DisplayAction,
 } from "@/domain/display/display.types";
-import { Monitor, CreditCard, Users, QrCode, Laptop2 } from "lucide-react";
-import { useRealtimeSession } from "@/hooks/use-realtime-session";
-import { RealtimeEvent } from "@/lib/supabase/realtime";
+import { Monitor, CreditCard, QrCode, Laptop2 } from "lucide-react";
 
 interface DisplayControlsProps {
   sessionId: string;
@@ -25,19 +23,27 @@ export function DisplayControls({
   // Plus besoin de state local complexe ici qui risque de diverger pour le heartbeat
   const displayState = currentDisplayState;
 
+  const [now, setNow] = useState(Date.now());
   const [showModal, setShowModal] = useState(false);
   const [pendingActionType, setPendingActionType] = useState<
     DisplayAction["type"] | null
   >(null);
 
-  const getStatus = (target: "display1" | "display2") => {
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getStatus = (
+    target: "display1" | "display2",
+    currentTime: number = now
+  ) => {
     const last = displayState[target]?.lastHeartbeat;
     if (!last) return "offline";
-    const now = Date.now();
-    return now - last < HEARTBEAT_TIMEOUT ? "online" : "offline";
+    return currentTime - last < HEARTBEAT_TIMEOUT ? "online" : "offline";
   };
 
-  const isD2Available = getStatus("display2") === "online";
+  const isD2Available = getStatus("display2", now) === "online";
 
   const getStatusColor = (status: "online" | "offline") => {
     return status === "online" ? "bg-green-500" : "bg-red-500";
@@ -78,7 +84,7 @@ export function DisplayControls({
           <div className="flex items-center gap-2">
             <div
               className={`w-3 h-3 rounded-full ${getStatusColor(
-                getStatus("display1")
+                getStatus("display1", now)
               )}`}
             />
             <span>Display 1</span>
@@ -86,7 +92,7 @@ export function DisplayControls({
           <div className="flex items-center gap-2">
             <div
               className={`w-3 h-3 rounded-full ${getStatusColor(
-                getStatus("display2")
+                getStatus("display2", now)
               )}`}
             />
             <span className={!isD2Available ? "opacity-50" : ""}>
@@ -120,7 +126,9 @@ export function DisplayControls({
       {showModal && (
         <div className="fixed inset-0 bg-black/50 overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-            <h3 className="text-lg font-bold mb-4">Choisir l'écran cible</h3>
+            <h3 className="text-lg font-bold mb-4">
+              Choisir l&apos;écran cible
+            </h3>
             <div className="grid grid-cols-1 gap-3">
               <button
                 onClick={() => sendAction("AUTO")}
@@ -155,7 +163,7 @@ export function DisplayControls({
               >
                 <div
                   className={`w-2 h-2 rounded-full ${getStatusColor(
-                    getStatus("display1")
+                    getStatus("display1", now)
                   )}`}
                 />
                 <span>Forcer sur Display 1</span>
@@ -167,7 +175,7 @@ export function DisplayControls({
               >
                 <div
                   className={`w-2 h-2 rounded-full ${getStatusColor(
-                    getStatus("display2")
+                    getStatus("display2", now)
                   )}`}
                 />
                 <span>Forcer sur Display 2</span>

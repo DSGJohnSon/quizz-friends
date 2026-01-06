@@ -9,7 +9,7 @@ export async function POST(
     const { id } = await params;
     const session = await lockSession(id);
     return NextResponse.json(session);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to lock session" },
       { status: 500 }

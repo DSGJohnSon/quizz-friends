@@ -23,7 +23,7 @@ Toutes les fonctions sont situées dans `domain/session/session.service.ts`.
 - `startSession(id)` : Lance le jeu (`IN_PROGRESS`).
 - `finishSession(id)` : Termine la session (`FINISHED`) et enregistre `finishedAt`.
 - `getSession(id)` : Récupère les détails complets avec joueurs et modules.
-- `checkPlayersConnectivity(id)` : Fonction interne pour mettre à jour le statut `isConnected` des joueurs via le heartbeat.
+- `checkPlayersConnectivity(id)` : Fonction interne pour mettre à jour le statut `isConnected` des joueurs. Un joueur est considéré déconnecté s'il n'a pas envoyé de heartbeat depuis plus de 7 secondes.
 
 ## 📡 Événements Temps Réel
 

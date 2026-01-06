@@ -1,0 +1,183 @@
+
+> quizz-friends@0.1.0 lint
+> eslint
+
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\[id]\draft\route.ts
+  12:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\[id]\finish\route.ts
+  13:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\[id]\join\route.ts
+  21:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\[id]\lock\route.ts
+  12:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\[id]\publish\route.ts
+  12:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\[id]\route.ts
+  20:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\[id]\start\route.ts
+  12:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\api\sessions\by-code\[code]\route.ts
+  24:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\layout.tsx
+  2:10  warning  'Geist' is defined but never used       @typescript-eslint/no-unused-vars
+  2:17  warning  'Geist_Mono' is defined but never used  @typescript-eslint/no-unused-vars
+  2:36  warning  'Manrope' is defined but never used     @typescript-eslint/no-unused-vars
+  2:45  warning  'Rubik' is defined but never used       @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\app\sessions\[sessionId]\results\page.tsx
+  176:21  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\game\display-manager.tsx
+  39:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  57:7   error  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\game\qr-code-display.tsx
+   7:3  warning  'sessionId' is defined but never used                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  26:7  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\game\screens\draft-screen.tsx
+  1:10  warning  'QuestionBanner' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\game\screens\finished-screen.tsx
+  2:10  warning  'GameSession' is defined but never used  @typescript-eslint/no-unused-vars
+  2:23  warning  'Player' is defined but never used       @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\game\screens\locked-screen.tsx
+  1:10  warning  'motion' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\game\screens\open-screen.tsx
+  1:10  warning  'motion' is defined but never used      @typescript-eslint/no-unused-vars
+  5:10  warning  'useDisplay' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\display-controls.tsx
+    3:20  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+    9:31  warning  'Users' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   10:10  warning  'useRealtimeSession' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   11:10  warning  'RealtimeEvent' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   36:17  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\display-controls.tsx:36:17
+  34 |     const last = displayState[target]?.lastHeartbeat;
+  35 |     if (!last) return "offline";
+> 36 |     const now = Date.now();
+     |                 ^^^^^^^^^^ Cannot call impure function
+  37 |     return now - last < HEARTBEAT_TIMEOUT ? "online" : "offline";
+  38 |   };
+  39 |  react-hooks/purity
+  123:61  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  195:9   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\host-layout.tsx
+  5:3  warning  'Users' is defined but never used            @typescript-eslint/no-unused-vars
+  6:3  warning  'LayoutDashboard' is defined but never used  @typescript-eslint/no-unused-vars
+  8:3  warning  'ChevronsRight' is defined but never used    @typescript-eslint/no-unused-vars
+  9:3  warning  'ChevronsLeft' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\host-manager.tsx
+   50:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  108:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\screens\draft-screen.tsx
+   5:10  warning  'Card' is defined but never used     @typescript-eslint/no-unused-vars
+  18:3   warning  'loading' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\screens\finished-screen.tsx
+  10:38  warning  'session' is defined but never used                              @typescript-eslint/no-unused-vars
+  16:40  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\screens\in-progress-screen.tsx
+  12:29  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:3   warning  'session' is defined but never used       @typescript-eslint/no-unused-vars
+  24:44  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\screens\locked-screen.tsx
+   5:20  warning  'Lock' is defined but never used     @typescript-eslint/no-unused-vars
+   5:34  warning  'Undo2' is defined but never used    @typescript-eslint/no-unused-vars
+  15:3   warning  'session' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\screens\open-screen.tsx
+  5:10  warning  'Card' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\host\screens\published-screen.tsx
+  14:3  warning  'session' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\player\join-session-form.tsx
+  74:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\player\screens\finished-screen.tsx
+   5:10  warning  'Button' is defined but never used   @typescript-eslint/no-unused-vars
+  20:3   warning  'onLeave' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\player\screens\in-progress-screen.tsx
+  16:3  warning  'session' is defined but never used  @typescript-eslint/no-unused-vars
+  17:3  warning  'player' is defined but never used   @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\player\screens\locked-screen.tsx
+   5:10  warning  'Button' is defined but never used   @typescript-eslint/no-unused-vars
+  20:3   warning  'onLeave' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\player\screens\open-screen.tsx
+   7:10  warning  'LucideLoader2' is defined but never used                        @typescript-eslint/no-unused-vars
+  55:32  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  55:36  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\ui\card.tsx
+  3:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\ui\input.tsx
+  3:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\ui\label.tsx
+  3:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\components\ui\textarea.tsx
+  3:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\domain\display\display.service.ts
+  49:39  error  Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  59:7   error  'newState' is never reassigned. Use 'const' instead  prefer-const
+  84:39  error  Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\domain\display\display.types.ts
+  36:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\hooks\use-display.ts
+  4:3  warning  'DisplayInfo' is defined but never used    @typescript-eslint/no-unused-vars
+  5:3  warning  'DisplayTarget' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\hooks\use-media-query.ts
+  13:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\hooks\use-media-query.ts:13:5
+  11 |     const result = matchMedia(query);
+  12 |     result.addEventListener("change", onChange);
+> 13 |     setValue(result.matches);
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  14 |
+  15 |     return () => result.removeEventListener("change", onChange);
+  16 |   }, [query]);  react-hooks/set-state-in-effect
+
+C:\Users\fredf\Desktop\MAIN\DEV\PERSO\quizz-friends\lib\supabase\realtime.ts
+  19:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  27:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 71 problems (27 errors, 44 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

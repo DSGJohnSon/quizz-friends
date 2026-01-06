@@ -3,9 +3,6 @@
 import { GameSession, Player } from "@prisma/client";
 import { useDisplay } from "@/hooks/use-display";
 import { DisplayState } from "@/domain/display/display.types";
-import { QRCodeDisplay } from "@/components/game/qr-code-display";
-import { PlayerGrid } from "@/components/game/player-grid";
-import { VersionDisplay } from "@/components/version-display";
 import { DraftScreen } from "@/components/game/screens/draft-screen";
 import { PublishedScreen } from "@/components/game/screens/published-screen";
 import { OpenScreen } from "@/components/game/screens/open-screen";
@@ -14,8 +11,9 @@ import { InProgressScreen } from "@/components/game/screens/in-progress-screen";
 import { FinishedScreen } from "@/components/game/screens/finished-screen";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { useRealtimeSession } from "@/hooks/use-realtime-session";
-import { RealtimeEvent } from "@/lib/supabase/realtime";
+import { GameLogo } from "@/components/game/game-logo";
+import { APP_VERSION } from "@/lib/version";
+import BgAnimated from "../bg-animated";
 
 type SessionWithPlayers = GameSession & { players: Player[] };
 
@@ -61,42 +59,6 @@ export function DisplayManager({
 
   // Fonction de rendu du contenu principal
   const renderContent = () => {
-    // 1. Gestion des Vues Explicites (définies par l'Host)
-    // 1. Gestion des Vues Explicites (définies par l'Host)
-    if (myView.type === "LOBBY") {
-      // Sur Display 2, "LOBBY" signifie juste la liste des joueurs
-      if (displayTarget === "DISPLAY_2") {
-        return (
-          <div className="h-full p-8 overflow-y-auto">
-            <h2 className="text-3xl font-bold text-center mb-6">Joueurs</h2>
-            <PlayerGrid players={session.players} />
-          </div>
-        );
-      }
-
-      // Sur Display 1 (ou Auto), on affiche la vue complète
-      return (
-        <div className="grid grid-cols-2 gap-8 h-full items-center p-8">
-          <div className="flex flex-col items-center justify-center border-r border-white/20">
-            <h2 className="text-3xl font-bold mb-8">Rejoignez la partie !</h2>
-            <QRCodeDisplay sessionId={session.id} code={session.code} />
-          </div>
-          <div className="h-full overflow-y-auto">
-            <h2 className="text-3xl font-bold text-center mb-6">Joueurs</h2>
-            <PlayerGrid players={session.players} />
-          </div>
-        </div>
-      );
-    }
-
-    if (myView.type === "SCOREBOARD") {
-      return (
-        <div className="h-full flex items-center justify-center">
-          <h2 className="text-4xl">Tableau des scores (À venir)</h2>
-        </div>
-      );
-    }
-
     // 2. Fallback: Vue par défaut selon le statut de la session (si EMPTY)
     // C'est ici qu'on gère l'écran d'attente générique ou le jeu en cours
     return renderDefaultSessionView();
@@ -121,8 +83,37 @@ export function DisplayManager({
     }
   };
 
+  const getLogoSize = () => {
+    //DISPLAY 2 ONLY NEED BIG
+    if (["OPEN", "LOCKED"].includes(session.status) && displayTarget === "DISPLAY_2") {
+      return "BIG";
+    }
+    //DISPLAY 2 ONLY NEED MEDIUM
+    if ([""].includes(session.status) && displayTarget === "DISPLAY_2") {
+      return "MEDIUM";
+    }
+    //DISPLAY 2 ONLY NEED SMALL
+    if ([""].includes(session.status) && displayTarget === "DISPLAY_2") {
+      return "SMALL";
+    }
+    //---------------------
+    //BIG
+    if (["DRAFT", "IN_PROGRESS"].includes(session.status)) {
+      return "BIG";
+    }
+    //MEDIUM
+    if (["LOCKED"].includes(session.status)) {
+      return "MEDIUM";
+    }
+    //SMALL
+    return "SMALL";
+  };
+
+  const logoSize = getLogoSize();
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-600 to-blue-600 text-white overflow-hidden relative">
+    <div className="w-screen h-screen relative text-white overflow-hidden">
+      <GameLogo size={logoSize} />
       <AnimatePresence mode="wait">
         <motion.div
           key={myView.type + session.status} // Clé pour déclencher l'animation
@@ -130,17 +121,19 @@ export function DisplayManager({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.5 }}
-          className="w-full h-screen"
+          className="w-full h-screen z-50"
         >
           {renderContent()}
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute bottom-4 right-4 text-xs opacity-50 font-mono text-right">
-        <div>{displayTarget}</div>
-        <div>Status: {session.status}</div>
+      <div className="absolute bottom-4 right-4 text-xs mix-blend-difference text-white/10 font-mono text-right z-10">
+        <div className="">{displayTarget}</div>
+        <div>
+          Status: {session.status} - v{APP_VERSION}
+        </div>
       </div>
-      <VersionDisplay />
+      <BgAnimated />
     </div>
   );
 }

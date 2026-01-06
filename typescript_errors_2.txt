@@ -1,0 +1,5 @@
+hooks/use-display.ts(22,23): error TS2352: Conversion of type 'Record<string, unknown>' to type 'DisplayState' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Record<string, unknown>' is missing the following properties from type 'DisplayState': display1, display2
+hooks/use-realtime-session.ts(13,51): error TS2345: Argument of type '(event: RealtimeEvent) => void' is not assignable to parameter of type '(payload: Record<string, unknown>) => void'.
+  Types of parameters 'event' and 'payload' are incompatible.
+    Type 'Record<string, unknown>' is missing the following properties from type 'RealtimeEvent': type, sessionId, payload, timestamp

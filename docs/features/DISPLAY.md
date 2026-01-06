@@ -30,8 +30,8 @@ _(Note : Si D1 affiche déjà LOBBY et qu'on demande SHOW_LOBBY -> D1 devient EM
 
 ## Heartbeat & Détection
 
-Chaque page display envoie un "heartbeat" toutes les 5 secondes.
-L'interface Host utilise cette information pour afficher des indicateurs de statut (Vert/Rouge) et informer le service de la disponibilité du Display 2 lors des actions AUTO.
+Chaque page de diffusion (`/game`, `/game-2`) envoie un "heartbeat" toutes les 5 secondes pour signaler sa présence.
+L'interface Host utilise cette information (stockée dans le JSON `displayState`) pour afficher des indicateurs de statut (Vert/Rouge) et informer le service de la disponibilité du Display 2 lors des actions AUTO.
 
 ## API
 

@@ -19,7 +19,7 @@ export function useDisplay(
   // Écoute des mises à jour Realtime
   const handleRealtimeEvent = useCallback((event: RealtimeEvent) => {
     if (event.type === "display:updated") {
-      setDisplayState(event.payload as DisplayState);
+      setDisplayState(event.payload as unknown as DisplayState);
     }
   }, []);
 

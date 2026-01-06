@@ -9,7 +9,9 @@ docs/
 ├── changelog/           # Historique des versions
 │   ├── v1.0.0.md
 │   ├── v1.1.0.md
-│   └── v1.2.0.md
+│   ├── v1.2.0.md
+│   ├── v1.3.0.md
+│   └── v1.4.0.md
 ├── tests/              # Guides de test par version
 │   ├── v1.0.0-tests.md
 │   ├── v1.1.0-tests.md

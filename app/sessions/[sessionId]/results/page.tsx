@@ -1,7 +1,6 @@
 import { getSession } from "@/domain/session/session.service";
 import { Card } from "@/components/ui/card";
 import { notFound } from "next/navigation";
-import { VersionDisplay } from "@/components/version-display";
 
 export default async function ResultsPage({
   params,
@@ -174,10 +173,9 @@ export default async function ResultsPage({
         )}
 
         <div className="mt-20 text-center text-white/40 text-sm">
-          <p>Merci d'avoir joué à Quiz Friends !</p>
+          <p>Merci d&apos;avoir joué à Quiz Friends !</p>
         </div>
       </div>
-      <VersionDisplay />
     </div>
   );
 }

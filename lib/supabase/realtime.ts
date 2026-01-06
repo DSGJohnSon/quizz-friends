@@ -16,7 +16,7 @@ export type RealtimeEventType =
 export interface RealtimeEvent {
   type: RealtimeEventType;
   sessionId: string;
-  payload: any;
+  payload: Record<string, unknown>;
   timestamp: string;
 }
 
@@ -24,7 +24,7 @@ export interface RealtimeEvent {
 export async function publishEvent(
   sessionId: string,
   type: RealtimeEventType,
-  payload: any
+  payload: Record<string, unknown>
 ) {
   const channel = supabase.channel(`session:${sessionId}`);
   await channel.send({
@@ -42,14 +42,18 @@ export async function publishEvent(
 // S'abonner aux événements d'une session
 export function subscribeToSession(
   sessionId: string,
-  callback: (event: RealtimeEvent) => void
+  onEvent: (payload: Record<string, unknown>) => void
 ): RealtimeChannel {
   const channel = supabase.channel(`session:${sessionId}`);
 
   channel
-    .on("broadcast", { event: "*" }, ({ payload }) => {
-      callback(payload as RealtimeEvent);
-    })
+    .on(
+      "broadcast",
+      { event: "game-event" },
+      (payload: Record<string, unknown>) => {
+        onEvent(payload);
+      }
+    )
     .subscribe();
 
   return channel;

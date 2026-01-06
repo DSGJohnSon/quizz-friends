@@ -10,7 +10,9 @@ export function useRealtimeSession(
   onEvent: (event: RealtimeEvent) => void
 ) {
   useEffect(() => {
-    const channel = subscribeToSession(sessionId, onEvent);
+    const channel = subscribeToSession(sessionId, (payload) => {
+      onEvent(payload as any);
+    });
 
     return () => {
       unsubscribeFromSession(channel);

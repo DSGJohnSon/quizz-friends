@@ -25,7 +25,7 @@ export async function POST(
     const newState = await updateDisplayState(id, action, isDisplay2Available);
 
     // Broadcast l'événement realtime
-    await publishEvent(id, "display:updated", newState);
+    await publishEvent(id, "display:updated", newState as any);
 
     return NextResponse.json(newState);
   } catch (error) {

@@ -52,5 +52,6 @@ Le système est conçu pour être "déclenché" par n'importe quel module :
 - **Manuel (Host)** : Une interface dans la liste des joueurs permet à l'animateur de récompenser ou pénaliser un joueur arbitrairement.
   - Endpoint : `POST /api/players/[id]/score`
   - Payload : `{ points: number, reason: string }`
+  - Note : Si `reason` est omis, la valeur par défaut est "Intervention du présentateur".
 
 Chaque module est responsable du calcul de ses points, mais doit passer par `awardPoints` pour la persistance et l'affichage.

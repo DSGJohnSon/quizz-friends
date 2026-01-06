@@ -82,11 +82,17 @@ Interface pour l'animateur :
   - **Interface Host** : Contrôle manuel (bonus/malus)
   - Podium fin de partie
 
-- **Gestion Multi-Écrans (NOUVEAU - v1.3.0)** :
+- **Gestion Multi-Écrans (v1.3.0)** :
+
   - Support **Display 1** (`/game`) & **Display 2** (`/game-2`)
   - **Routage Automatique** : Distribution intelligente (QR, Liste Joueurs, Scoreboard)
   - **Split View** : Affichage combiné si un seul écran
   - **Régie Complète** : Interface de contrôle, indicateurs de connexion, sélection de source.
+
+- **Redesign Visuel & Expérience (NOUVEAU - v1.4.0)** :
+  - **Refonte Display** : Interface TV modernisée, animations fluides.
+  - **Refonte Host** : Panneau de contrôle épuré et plus intuitif.
+  - **Refonte Player** : UI Mobile-first optimisée.
 
 ## 🛠️ Stack Technique
 
@@ -192,7 +198,7 @@ Toute la documentation du projet est centralisée dans le dossier [`/docs`](docs
 
 ### Version Actuelle
 
-**v1.3.0** - Affichée en bas à gauche de chaque écran
+**v1.4.0** - Affichée en bas à gauche de chaque écran
 
 Pour mettre à jour la version, modifier `lib/version.ts`.
 

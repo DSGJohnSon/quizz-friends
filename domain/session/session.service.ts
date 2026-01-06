@@ -41,6 +41,11 @@ export async function openSession(sessionId: string) {
   const session = await prisma.gameSession.update({
     where: { id: sessionId },
     data: { status: "OPEN" },
+    include: {
+      players: {
+        orderBy: { joinedAt: "asc" },
+      },
+    },
   });
 
   await publishEvent(sessionId, "session:updated", { session });
@@ -187,4 +192,23 @@ export async function listSessions(status?: SessionStatus) {
     },
     orderBy: { createdAt: "desc" },
   });
+}
+
+export async function resetSessionToDraft(sessionId: string) {
+  const session = await prisma.gameSession.update({
+    where: { id: sessionId },
+    data: {
+      status: "DRAFT",
+      publishedAt: null,
+      startedAt: null,
+      finishedAt: null,
+      displayState: {
+        display1: { view: { type: "EMPTY" } },
+        display2: { view: { type: "EMPTY" } },
+      },
+    },
+  });
+
+  await publishEvent(sessionId, "session:updated", { session });
+  return session;
 }

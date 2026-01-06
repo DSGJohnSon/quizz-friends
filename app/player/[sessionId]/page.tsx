@@ -1,6 +1,6 @@
 import { getSession } from "@/domain/session/session.service";
 import { getPlayer } from "@/domain/player/player.service";
-import { PlayerWaitingRoom } from "@/components/player/waiting-room";
+import { PlayerManager } from "@/components/player/player-manager";
 import { notFound } from "next/navigation";
 
 export default async function PlayerSessionPage({
@@ -26,5 +26,5 @@ export default async function PlayerSessionPage({
     notFound();
   }
 
-  return <PlayerWaitingRoom session={session} player={player} />;
+  return <PlayerManager session={session} player={player} />;
 }

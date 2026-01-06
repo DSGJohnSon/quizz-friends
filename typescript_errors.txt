@@ -1,0 +1,2 @@
+components/host/host-manager.tsx(138,13): error TS2322: Type '{ session: SessionWithPlayers; onPublish: () => Promise<void>; loading: boolean; }' is not assignable to type 'IntrinsicAttributes & HostDraftScreenProps'.
+  Property 'loading' does not exist on type 'IntrinsicAttributes & HostDraftScreenProps'.

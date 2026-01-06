@@ -10,59 +10,36 @@ interface OpenScreenProps {
 }
 
 export function OpenScreen({ session, displayTarget }: OpenScreenProps) {
-  // On détecte si D2 est présent via le hook useDisplay (qui peut nous donner l'info globale si on l'exposait)
-  // Mais ici, on va simplifier :
-  // D1 -> Affiche QR Code. (Option: Si on veut le split view automatique ici, il faudrait savoir si D2 est là).
-  // D2 -> Affiche Player Grid.
-
-  // Le user a dit : "D1 QR CODE (Ou QR Code + Joueurs si D2 absent)"
-  // Pour l'instant on va faire simple : D1 = LOBBY (QR + Joueurs) par défaut c'est plus safe, ou juste QR.
-  // Si on veut respecter strictement "QR Code" (et split si D2 absent), on a besoin de l'info de présence D2.
-  // Cette info est dispo dans displayState.
-
-  // NOTE: DisplayManager passe déjà 'initialDisplayState'. On pourrait l'utiliser.
-
   if (displayTarget === "DISPLAY_2") {
-    return (
-      <div className="h-full p-8">
-        <h2 className="text-4xl font-bold text-center mb-8">
-          Joueurs connectés
-        </h2>
-        <PlayerGrid players={session.players} />
-      </div>
-    );
+    return null;
   }
 
-  // DISPLAY_1
-  // On vérifie si D2 est 'actif' (heartbeat < 15s)
-  // Il faut caster session.displayState car c'est un JsonValue dans Prisma
-  const displayState = session.displayState as any;
-  const d2LastHeartbeat = displayState?.display2?.lastHeartbeat;
-  const isD2Active = d2LastHeartbeat && Date.now() - d2LastHeartbeat < 15000;
-
-  if (isD2Active) {
-    // D2 est là pour afficher les joueurs, donc D1 affiche juste le QR gros
-    return (
-      <div className="flex flex-col items-center justify-center h-full p-8">
-        <h2 className="text-4xl font-bold mb-8">Rejoignez la partie !</h2>
-        <div className="scale-150 transform">
-          <QRCodeDisplay sessionId={session.id} code={session.code} />
-        </div>
-      </div>
-    );
-  }
-
-  // Fallback: Pas de D2 détecté, on affiche le Split View (QR + Players)
   return (
-    <div className="grid grid-cols-2 gap-8 h-full items-center p-8">
-      <div className="flex flex-col items-center justify-center border-r border-white/20">
-        <h2 className="text-3xl font-bold mb-8">Rejoignez la partie !</h2>
-        <div className="scale-125 transform">
+    <div className="w-screen h-screen pt-45 px-32 pb-24 flex gap-32">
+      <div className="w-1/2  flex flex-col items-center justify-between">
+        <div className="w-2/3 mx-auto">
           <QRCodeDisplay sessionId={session.id} code={session.code} />
         </div>
+        <div className="w-full bg-gray-900/50 border border-gray-600/50 rounded-xl p-6">
+          <h2 className="text-3xl font-bold text-center mb-2">
+            Rejoignez la partie !
+          </h2>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-center">
+              Scannez le QR Code ci-dessus ou rendez-vous sur :
+            </p>
+            <p className="text-center px-6 py-1 pb-2 bg-linear-to-r from-[#462255] to-[#ef6351] rounded-xl inline-block">
+              quizz.fredf.fr/{session.code}
+            </p>
+          </div>
+        </div>
       </div>
-      <div className="h-full overflow-y-auto">
-        <h2 className="text-3xl font-bold text-center mb-6">Joueurs</h2>
+      <div className="w-1/2 h-full overflow-y-auto flex flex-col gap-12">
+        <div className="flex items-center gap-4">
+          <div className="block w-full h-[2px] bg-white"></div>
+          <h2 className="text-3xl font-bold text-center mb-1 uppercase">Candidats</h2>
+          <div className="block w-full h-[2px] bg-white"></div>
+        </div>
         <PlayerGrid players={session.players} />
       </div>
     </div>

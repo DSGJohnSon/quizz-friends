@@ -24,9 +24,6 @@ export function QRCodeDisplay({
   return (
     <div className="bg-white p-8 rounded-2xl shadow-2xl">
       <img src={qrDataUrl} alt="QR Code" className="w-full" />
-      <p className="text-center text-black font-mono text-2xl mt-4 font-bold">
-        {code}
-      </p>
     </div>
   );
 }

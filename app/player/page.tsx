@@ -1,3 +1,5 @@
+import BgAnimated from "@/components/bg-animated";
+import { GameLogo } from "@/components/game/game-logo";
 import { JoinSessionForm } from "@/components/player/join-session-form";
 
 export default async function PlayerPage({
@@ -8,8 +10,12 @@ export default async function PlayerPage({
   const { session } = await searchParams;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center p-4">
+    <div className="h-screen flex items-center justify-center p-4 relative">
+      <div>
+        <GameLogo size={"SMALL"} />
+      </div>
       <JoinSessionForm sessionCode={session} />
+      <BgAnimated />
     </div>
   );
 }

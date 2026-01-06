@@ -10,7 +10,10 @@ export async function POST(
   try {
     const session = await finishSession(id);
     return NextResponse.json(session);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch {
+    return NextResponse.json(
+      { error: "An unexpected error occurred." },
+      { status: 500 }
+    );
   }
 }

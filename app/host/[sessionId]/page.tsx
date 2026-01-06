@@ -1,5 +1,5 @@
 import { getSession } from "@/domain/session/session.service";
-import { HostControlPanel } from "@/components/host/control-panel";
+import { HostManager } from "@/components/host/host-manager";
 import { notFound } from "next/navigation";
 import { getDisplayState } from "@/domain/display/display.service";
 
@@ -17,8 +17,8 @@ export default async function HostSessionPage({
   }
 
   return (
-    <div className="container mx-auto p-8 max-w-7xl">
-      <HostControlPanel session={session} initialDisplayState={displayState} />
+    <div>
+      <HostManager session={session} initialDisplayState={displayState} />
     </div>
   );
 }

@@ -102,7 +102,6 @@ quizz-friends/
 │   ├── host/                 # Composants host
 │   ├── game/                 # Composants game
 │   ├── player/               # Composants player
-│   └── version-display.tsx   # Affichage version
 ├── domain/                   # Services métier
 │   ├── session/              # Gestion sessions
 │   └── player/               # Gestion joueurs
@@ -193,6 +192,13 @@ quizz-friends/
 - ✅ **Régie Host** : Interface de contrôle avec indicateurs de statut (Heartbeat) et modale de sélection.
 - ✅ Persistance totale de l'état des écrans.
 
+#### Redesign Visuel & Expérience (v1.4.0)
+
+- ✅ **Refonte Display** : Interface TV modernisée, animations fluides.
+- ✅ **Refonte Host** : Panneau de contrôle épuré et plus intuitif.
+- ✅ **Refonte Player** : UI Mobile-first optimisée (couleurs, espacements).
+- ✅ **Harmonisation UI** : Cohérence graphique globale (typographie, composants cards).
+
 #### Système de Versioning
 
 - ✅ Affichage version (bas gauche)
@@ -206,6 +212,7 @@ quizz-friends/
 - [x] Système de scores (extensible & manuel)
 - [x] Classements et podiums
 - [x] Gestion Multi-Écrans (Displays)
+- [x] Redesign Visuel (v1.4.0)
 - [ ] Animations avancées
 - [ ] Authentification Supabase
 - [ ] Éditeur de questions
@@ -354,6 +361,6 @@ quizz-friends/
 
 ---
 
-**Version de ce document** : 1.3.0  
-**Dernière mise à jour** : 2026-01-04  
+**Version de ce document** : 1.4.0
+**Dernière mise à jour** : 2026-01-05
 **Maintenir à jour après chaque tâche importante !**

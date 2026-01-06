@@ -1,7 +1,6 @@
 import { listSessions } from "@/domain/session/session.service";
 import { SessionList } from "@/components/host/session-list";
 import { Button } from "@/components/ui/button";
-import { VersionDisplay } from "@/components/version-display";
 import Link from "next/link";
 
 export default async function HostPage() {
@@ -17,7 +16,6 @@ export default async function HostPage() {
       </div>
 
       <SessionList sessions={sessions} />
-      <VersionDisplay />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { VersionDisplay } from "@/components/version-display";
 
 export default function Home() {
   return (
@@ -32,7 +31,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <VersionDisplay />
     </div>
   );
 }

@@ -128,13 +128,13 @@ Le localStorage est nettoyé :
 
 ## 🚀 Améliorations (v1.1.0)
 
-- [x] Synchroniser `isConnected` avec le statut réel du joueur (Heartbeat 5s)
-- [x] Détecter les déconnexions réseau et bloquer l'interface (Network listeners)
+- [x] Synchroniser `isConnected` avec le statut réel du joueur (Heartbeat 3s)
+- [x] Détecter les déconnexions réseau et bloquer l'interface avec un message "Reconnexion..."
 - [x] Ajouter un timeout d'expiration (24h)
 - [x] Permettre de "reprendre" une session via `/results`
 
 ## 🎯 Avantages v1.1.0
 
-- **Fiabilité** : L'host sait exactement qui est là.
-- **Robustesse** : Le joueur est averti s'il perd sa connexion.
+- **Fiabilité** : L'host sait exactement qui est là (timeout de 7s).
+- **Robustesse** : Le joueur est averti par une interface semi-transparente s'il perd sa connexion internet ou si le serveur ne répond plus.
 - **Nettoyage** : Pas de sessions fantômes qui durent indéfiniment.
